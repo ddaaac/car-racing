@@ -32,8 +32,6 @@ class DQNTrainer:
         plot = [[], []]
         total_reward = 0
         episode = 1
-        csv_file = open("../drive/My Drive/reward_csv.csv", "w", newline="\n")
-        csv_writer = csv.writer(csv_file)
 
         for step in range(int(self.params.num_of_steps)):
             q_value = self.current_q_net(torch.stack([state]))
@@ -59,15 +57,17 @@ class DQNTrainer:
                 episode += 1
                 plt.plot(plot[0], plot[1])
                 plt.savefig('../drive/My Drive/reward_plot.png')
+                csv_file = open("../drive/My Drive/reward_csv.csv", "w", newline="\n")
+                csv_writer = csv.writer(csv_file)
                 csv_writer.writerow(plot[1])
-                print("An episode is over. Reward: {}", total_reward)
+                csv_file.close()
+                print("An episode is over. Reward: {}".format(total_reward))
                 total_reward = 0
             if len(self.replay_memory.memory) > self.params.batch_size:
                 loss = self._update_current_q_net()
             if step % self.params.target_update_freq == 0:
                 self._update_target_q_net()
         torch.save(self.target_q_net.state_dict(), self.model_path)
-        csv_file.close()
 
     def _update_current_q_net(self):
         batch = self.replay_memory.sample(self.params.batch_size)
