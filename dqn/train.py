@@ -33,7 +33,7 @@ class DQNTrainer:
         total_reward = 0
         episode = 1
         csv_file = open("drive/My Drive/reward_csv.csv", "w", newline="\n")
-        csv_writer = csv.write(csv_file)
+        csv_writer = csv.writer(csv_file)
 
         for step in range(int(self.params.num_of_steps)):
             q_value = self.current_q_net(torch.stack([state]))
