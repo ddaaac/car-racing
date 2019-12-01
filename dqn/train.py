@@ -32,7 +32,7 @@ class DQNTrainer:
         plot = [[], []]
         total_reward = 0
         episode = 1
-        csv_file = open("drive/My Drive/reward_csv.csv", "w", newline="\n")
+        csv_file = open("../drive/My Drive/reward_csv.csv", "w", newline="\n")
         csv_writer = csv.writer(csv_file)
 
         for step in range(int(self.params.num_of_steps)):
@@ -58,7 +58,7 @@ class DQNTrainer:
                 plot[1].append(total_reward)
                 episode += 1
                 plt.plot(plot[0], plot[1])
-                plt.savefig('drive/My Drive/reward_plot.png')
+                plt.savefig('../drive/My Drive/reward_plot.png')
                 csv_writer.writerow(plot[1])
                 print("An episode is over. Reward: {}", total_reward)
                 total_reward = 0
