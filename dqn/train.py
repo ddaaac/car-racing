@@ -8,6 +8,7 @@ from dqn.replay_memory import ReplayMemory
 from dqn.environment_wrapper import EnvironmentWrapper
 from matplotlib import pyplot as plt
 import csv
+import time
 
 class DQNTrainer:
     def __init__(self, params, model_path):
@@ -33,6 +34,7 @@ class DQNTrainer:
         total_reward = 0
         episode = 1
         plt.figure()
+        start_time = time.time()
 
         for step in range(int(self.params.num_of_steps)):
             q_value = self.current_q_net(torch.stack([state]))
@@ -68,6 +70,7 @@ class DQNTrainer:
             if step % self.params.target_update_freq == 0:
                 self._update_target_q_net()
         torch.save(self.target_q_net.state_dict(), self.model_path)
+        print("training Runtime : {}".format(time.time() - start_time))
 
     def _update_current_q_net(self):
         batch = self.replay_memory.sample(self.params.batch_size)
