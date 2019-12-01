@@ -7,13 +7,16 @@ class DQN(nn.Module):
     def __init__(self, input_shape, num_of_actions):
         super().__init__()
 
-        self.conv1 = nn.Conv2d(input_shape, 16, kernel_size=5, stride=2)
+        self.conv1_1 = nn.Conv2d(input_shape, 16, kernel_size=3, stride=2)
+        self.conv1_2 = nn.Conv2d(16, 16, kernel_size=3, stride=2)
         self.max_pool1 = nn.MaxPool2d(kernel_size=2, stride=2, padding=1)
         self.batch_norm1 = nn.BatchNorm2d(16)
-        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2)
+        self.conv2_1 = nn.Conv2d(16, 32, kernel_size=3, stride=2)
+        self.conv2_2 = nn.Conv2d(32, 32, kernel_size=3, stride=2)
         self.batch_norm2 = nn.BatchNorm2d(32)
-        self.conv3 = nn.Conv2d(32, 32, kernel_size=5, stride=2)
-        self.batch_norm3 = nn.BatchNorm2d(32)
+        self.conv3_1 = nn.Conv2d(32, 64, kernel_size=3, stride=2)
+        self.conv3_2 = nn.Conv2d(64, 64, kernel_size=3, stride=2)
+        self.batch_norm3 = nn.BatchNorm2d(64)
 
         self.linear1 = nn.Linear(288, 256)
         self.linear2 = nn.Linear(256, num_of_actions)
