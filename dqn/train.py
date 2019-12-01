@@ -32,6 +32,7 @@ class DQNTrainer:
         plot = [[], []]
         total_reward = 0
         episode = 1
+        plt.figure()
 
         for step in range(int(self.params.num_of_steps)):
             q_value = self.current_q_net(torch.stack([state]))
@@ -51,7 +52,6 @@ class DQNTrainer:
                 state = torch.tensor(self.environment.reset(),
                                      device=self.device,
                                      dtype=torch.float32)
-                fig = plt.figure()
                 plot[0].append(episode)
                 plot[1].append(total_reward)
                 episode += 1
