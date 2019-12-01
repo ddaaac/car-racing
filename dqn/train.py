@@ -58,8 +58,8 @@ class DQNTrainer:
                 plot[1].append(total_reward)
                 episode += 1
                 plt.plot(plot[0], plot[1])
-                plt.savefig('../drive/My Drive/reward_plot.png')
-                csv_file = open("../drive/My Drive/reward_csv.csv", "w", newline="\n")
+                plt.savefig('../drive/My Drive/reward_plot2.png')
+                csv_file = open("../drive/My Drive/reward_csv2.csv", "w", newline="\n")
                 csv_writer = csv.writer(csv_file)
                 csv_writer.writerow(plot[1])
                 csv_file.close()
