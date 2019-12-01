@@ -70,7 +70,7 @@ class DQNTrainer:
             if step % self.params.target_update_freq == 0:
                 self._update_target_q_net()
         torch.save(self.target_q_net.state_dict(), self.model_path)
-        print("training Runtime : {}".format(time.time() - start_time))
+        print("training Runtime : {} min".format((time.time() - start_time)/60))
 
     def _update_current_q_net(self):
         batch = self.replay_memory.sample(self.params.batch_size)
