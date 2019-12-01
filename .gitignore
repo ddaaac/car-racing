@@ -1,0 +1,9 @@
+.idea
+.vscode
+**/*.pyc
+imgs/*
+models/*
+!models/.gitkeep
+!models/dqn.pt
+!models/a2c.pt
+!models/a3c.pt
