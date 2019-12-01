@@ -24,7 +24,7 @@ class DQN(nn.Module):
     def forward(self, x):
         conv1_out = F.relu(self.batch_norm1(self.max_pool1(self.conv1_2(self.conv1_1(x)))))
         conv2_out = F.relu(self.batch_norm2(self.conv2_2(self.conv2_1(conv1_out))))
-        self.linear1(torch.flatten(self.conv3_1(conv2_out)))
+        self.linear1(torch.flatten(self.conv3_2(self.conv3_1(conv2_out)), start_dim=1))
         conv3_out = F.relu(self.batch_norm3(self.conv3_2(self.conv3_1(conv2_out))))
 
         flattened = torch.flatten(conv3_out, start_dim=1)
