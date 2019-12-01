@@ -31,11 +31,12 @@ class DQNTrainer:
                              dtype=torch.float32)
         self._update_target_q_net()
         plot = [[], []]
+        time_arr = []
         total_reward = 0
         episode = 1
         plt.figure()
         start_time = time.time()
-
+        last_done_time = time.time()
         for step in range(int(self.params.num_of_steps)):
             q_value = self.current_q_net(torch.stack([state]))
             action_index, action = get_action(q_value,
@@ -58,10 +59,13 @@ class DQNTrainer:
                 plot[1].append(total_reward)
                 episode += 1
                 plt.plot(plot[0], plot[1])
+                time_arr.append(last_done_time-time.time())
+                last_done_time = time.time()
                 plt.savefig('../drive/My Drive/reward_plot2.png')
                 csv_file = open("../drive/My Drive/reward_csv2.csv", "w", newline="\n")
                 csv_writer = csv.writer(csv_file)
                 csv_writer.writerow(plot[1])
+                csv_writer.writerow(time_arr)
                 csv_file.close()
                 print("An episode is over. Reward: {}".format(total_reward))
                 total_reward = 0
