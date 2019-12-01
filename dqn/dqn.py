@@ -12,7 +12,7 @@ class DQN(nn.Module):
         self.max_pool1 = nn.MaxPool2d(kernel_size=2, stride=2, padding=1)
         self.batch_norm1 = nn.BatchNorm2d(8)
         self.conv2_1 = nn.Conv2d(8, 16, kernel_size=3, stride=1)
-        self.conv2_2 = nn.Conv2d(16, 32, kernel_size=3, stride=1)
+        self.conv2_2 = nn.Conv2d(16, 16, kernel_size=3, stride=1)
         self.batch_norm2 = nn.BatchNorm2d(16)
         self.conv3_1 = nn.Conv2d(16, 32, kernel_size=3, stride=1)
         self.conv3_2 = nn.Conv2d(32, 32, kernel_size=3, stride=1)
