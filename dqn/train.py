@@ -25,10 +25,6 @@ class DQNTrainer:
         env = gym.make('CarRacing-v0')
         self.environment = EnvironmentWrapper(env, self.params.skip_steps)
 
-        self.max_neg_step = 100
-        self.neg_reward_cnt = 0
-        self.punishment = -20.0
-
     def run(self):
         state = torch.tensor(self.environment.reset(),
                              device=self.device,
@@ -54,24 +50,7 @@ class DQNTrainer:
                                       dtype=torch.float32)
             self.replay_memory.add(state, action_index, reward, next_state, done)
             state = next_state
-
-
-            if reward < 0:
-                self.neg_reward_cnt += 1
-            else:
-                self.neg_reward_cnt = 0
-
-
             total_reward += reward
-
-
-            if self.neg_reward_cnt > self.max_neg_step:
-                if total_reward < 500:
-                    total_reward += self.punishment
-                done = True
-
-
-
             if done:
                 state = torch.tensor(self.environment.reset(),
                                      device=self.device,
@@ -89,9 +68,6 @@ class DQNTrainer:
                 csv_writer.writerow(time_arr)
                 csv_file.close()
                 print("An episode is over. Reward: {}".format(total_reward))
-
-                self.neg_reward_cnt = 0
-
                 total_reward = 0
             if len(self.replay_memory.memory) > self.params.batch_size:
                 loss = self._update_current_q_net()
